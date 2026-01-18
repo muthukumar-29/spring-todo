@@ -3,6 +3,9 @@ package dev.muthu.todo_auth.service;
 import dev.muthu.todo_auth.model.Todo;
 import dev.muthu.todo_auth.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,12 +28,17 @@ public class TodoService {
         return todoRepository.findAll();
     }
 
+    public Page<Todo> getAllPages(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return todoRepository.findAll(pageable);
+    }
+
     public Todo updateById(Long id, Todo todo){
-        Todo existing = getById(id);
-        existing.setTitle(todo.getTitle());
-        existing.setDescription(todo.getDescription());
-        existing.setCompleted(todo.isCompleted());
-        return todoRepository.save(existing);
+//        Todo existing = getById(id);
+//        existing.setTitle(todo.getTitle());
+//        existing.setDescription(todo.getDescription());
+//        existing.setCompleted(todo.isCompleted());
+        return todoRepository.save(todo);
     }
 
     public void deleteById(Long id){
